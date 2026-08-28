@@ -113,23 +113,63 @@ function renderDates(yearNum, monthIndex)
 
    let totalDays = getTotalDaysOfMonth(yearNum, monthIndex);
 
-   function renderCell(date)
+   function renderCell(date, cellClass=`dateCell`)
    {
+      let cellSelected = false;
+
       let cell = document.createElement(`div`)
-      cell.classList.add(`dateCell`);
+      cell.classList.add(cellClass);
 
       let dateNum = document.createElement(`span`)
       dateNum.textContent = date;
 
       cell.append(dateNum)
       datesContainer.append(cell)
+
+      cell.onclick = function()
+      {
+         let currentSelected = datesContainer.querySelector(`.selectedCell`)
+         if(currentSelected!==null)
+         {
+            currentSelected.setAttribute(`class`,`dateCell`);
+         }
+         
+         if(cellSelected===true)
+         {
+            cellSelected = false
+            cell.setAttribute(`class`,`selectedCell`)
+            cell.setAttribute(`class`, `${cellClass}`)
+         }
+         else if (cellSelected===false)
+         {
+            cellSelected = true
+            cell.setAttribute(`class`, `${cellClass}`)
+            cell.setAttribute(`class`,`selectedCell`)
+         }
+
+      }
+
    }
 
    for(let i=1; i<=totalDays; i++)
    {
+      if(i===presentDate)
+      {
+         renderCell(i, `presentDateCell`)
+      }
+
       renderCell(i)
    }
 
+}
+
+datesContainer.addEventListener(`mousedown`, blockDubleClickSelection)
+function blockDubleClickSelection(event)
+{
+   if(event.detail > 1)
+   {
+      event.preventDefault()
+   }
 }
 
 /*
