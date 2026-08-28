@@ -153,7 +153,7 @@ function renderDates(yearNum, monthIndex)
 
    for(let i=1; i<=totalDays; i++)
    {
-      if(i===presentDate)
+      if(i===presentDate && presentMonthIndex===renderedMonthIndex)
       {
          renderCell(i, `presentDateCell`)
       }
