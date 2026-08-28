@@ -8,47 +8,54 @@ const nextMonthBtn = document.getElementById("nextMonthBtn")
 // END
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-let prevNextClicks = 0;
 
-renderPresent();
+const presentFullDate = new Date();
+const presentMonthIndex = presentFullDate.getMonth();
+const presentYearNum = presentFullDate.getFullYear();
+const presentDate = presentFullDate.getDate();
+let renderedMonthIndex = presentMonthIndex; // This'll track rendered state
 
-function renderPresent()
+renderMonth(presentYearNum, renderedMonthIndex, presentDate);
+
+function renderMonth(yearNum, monthIndex, day)
 {
-   const presentFullDate = new Date();
-   const presentMonthIndex = presentFullDate.getMonth();
-   const presentYearNum = presentFullDate.getFullYear();
-   const presentDate = presentFullDate.getDate();
-
-   renderHeader(presentYearNum, presentMonthIndex)
-   renderSpacingBeforeFirstDate(presentYearNum, presentMonthIndex)
-   renderDates(presentYearNum, presentMonthIndex)
+   renderHeader(yearNum, monthIndex)
+   renderSpacingBeforeFirstDate(yearNum, monthIndex)
+   renderDates(yearNum, monthIndex)
 
 }
 
 function renderPreviousMonth()
 {
-   prevNextClicks++
+   renderedMonthIndex--
    const prevMonthFullDate = new Date()
-   prevMonthFullDate.setMonth(prevMonthFullDate.getMonth() - prevNextClicks);
+   prevMonthFullDate.setMonth(renderedMonthIndex);
    let prevMonthIndex = prevMonthFullDate.getMonth();
    let prevYearNum = prevMonthFullDate.getFullYear();
 
-   renderHeader(prevYearNum, prevMonthIndex)
-/* renderSpacingBeforeFirstDate(prevYearNum, prevMonthIndex)
-   renderDates(prevYearNum, prevMonthIndex) */
+   datesContainer.innerHTML = ""
 
-   console.log(prevNextClicks)
+   renderHeader(presentYearNum, renderedMonthIndex)
+   renderSpacingBeforeFirstDate(prevYearNum, prevMonthIndex)
+   renderDates(prevYearNum, prevMonthIndex)
+
+   console.log(prevMonthFullDate)
 }
+
 function renderNextMonth()
 {
-   prevNextClicks++
+   renderedMonthIndex++
    const nextMonthFullDate = new Date()
-   nextMonthFullDate.setMonth(nextMonthFullDate.getMonth() + prevNextClicks);
+   nextMonthFullDate.setMonth(renderedMonthIndex)
    let nextMonthIndex = nextMonthFullDate.getMonth();
-   let nextYearNum = nextMonthFullDate.getFullYear();
+   let nextYearNum = nextMonthFullDate.getFullYear(); 
 
-   renderHeader(nextYearNum, nextMonthIndex)
-   console.log(prevNextClicks)
+   datesContainer.innerHTML = "";
+
+   renderHeader(presentYearNum, renderedMonthIndex)
+   renderSpacingBeforeFirstDate(nextYearNum, nextMonthIndex)
+   renderDates(nextYearNum, nextMonthIndex) 
+   console.log(nextMonthFullDate)
 }
 
 /* function renderPreviousMonth()
@@ -64,15 +71,20 @@ nextMonthBtn.addEventListener("click", renderNextMonth)
 
 function getTotalDaysOfMonth(yearNum, monthIndex, date=0)
 {
-   yearNum = monthIndex + 1;
+   monthIndex = monthIndex + 1;
    let totalDays = new Date(yearNum, monthIndex, date).getDate()
+   console.log(totalDays)
    return totalDays
 }
 
 function renderHeader(yearNum, monthIndex) 
 {
-   monthName.textContent = months[monthIndex];
-   yearNumHeader.textContent = yearNum;
+   let index = monthIndex;
+   let wrappedIndex = (index % months.length + months.length) % months.length;
+   let renderYearNum = new Date(yearNum, monthIndex, 1).getFullYear();
+   monthName.textContent = months[wrappedIndex];
+   yearNumHeader.textContent = renderYearNum;
+   console.log(renderYearNum)
 } 
 
 function renderSpacingBeforeFirstDate(yearNum, monthIndex)
@@ -120,33 +132,7 @@ function renderDates(yearNum, monthIndex)
 
 }
 
-
-function clearOldDates()
-{
-
-   let cells = datesContainer.querySelectorAll(`.dateCell`);
-   cells.forEach(removeCells)
-   function removeCells(cell)
-   {
-      datesContainer.remove(cell)
-   }
-
-}
-
-function clearOldSpacing()
-{
-   let spacingCells = datesContainer.querySelectorAll(`spacingCell`)
-   spacingCells.forEach(removeSpacing) // queryselectorall works
-   
-   function removeSpacing(spacingCell)
-   {
-      datesContainer.remove(spacingCell)
-   }
-
-}
-
-
 /*
 The whole calender needs to know what state its in currently. 
-Pressing those buttons change the index to previous or the next 
+Pressing those next and prev buttons change the index to previous or the next 
 index. */
