@@ -4,16 +4,28 @@ const yearNumHeader = document.getElementById("yearNumHeader");
 const datesContainer = document.getElementById("datesContainer");
 const previousMonthBtn = document.getElementById("previousMonthBtn")
 const nextMonthBtn = document.getElementById("nextMonthBtn")
-
+const dateDetailsPopover = document.getElementById("dateDetailsPopover")
+const addEventBtn = document.getElementById("addEventBtn")
+const detailsPanelDate = document.getElementById("detailsPanelDate")
 // END
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+const eventsCollection = [];
 
 const presentFullDate = new Date();
 const presentMonthIndex = presentFullDate.getMonth();
 const presentYearNum = presentFullDate.getFullYear();
 const presentDate = presentFullDate.getDate();
 let renderedMonthIndex = presentMonthIndex; // This'll track rendered state
+
+class Event
+{
+   constructor(date, label)
+   {
+      this.date = date,
+      this.label = label
+   }
+}
 
 renderMonth(presentYearNum, renderedMonthIndex, presentDate);
 
@@ -39,7 +51,6 @@ function renderPreviousMonth()
    renderSpacingBeforeFirstDate(prevYearNum, prevMonthIndex)
    renderDates(prevYearNum, prevMonthIndex)
 
-   console.log(prevMonthFullDate)
 }
 
 function renderNextMonth()
@@ -55,15 +66,8 @@ function renderNextMonth()
    renderHeader(presentYearNum, renderedMonthIndex)
    renderSpacingBeforeFirstDate(nextYearNum, nextMonthIndex)
    renderDates(nextYearNum, nextMonthIndex) 
-   console.log(nextMonthFullDate)
-}
 
-/* function renderPreviousMonth()
-{
-   const presentFullDate = new Date()
-   const prevMonth = presentFullDate.setMonth(presentFullDate.getMonth() - 1);
-   console.log(prevMonth)
-} */ // FIGURE OUT WHY DOES THIS NOT WORK???? IT GIVES WEIRD BIG NUMBER
+}
 
 previousMonthBtn.addEventListener("click", renderPreviousMonth)
 nextMonthBtn.addEventListener("click", renderNextMonth)
@@ -73,19 +77,29 @@ function getTotalDaysOfMonth(yearNum, monthIndex, date=0)
 {
    monthIndex = monthIndex + 1;
    let totalDays = new Date(yearNum, monthIndex, date).getDate()
-   console.log(totalDays)
    return totalDays
 }
 
-function renderHeader(yearNum, monthIndex) 
+function calcWrappedMonthIndex(yearNum, monthIndex) 
 {
    let index = monthIndex;
    let wrappedIndex = (index % months.length + months.length) % months.length;
-   let renderYearNum = new Date(yearNum, monthIndex, 1).getFullYear();
-   monthName.textContent = months[wrappedIndex];
-   yearNumHeader.textContent = renderYearNum;
-   console.log(renderYearNum)
+   return wrappedIndex;
 } 
+
+function calcYearFullNum(yearNum, monthIndex)
+{
+   let renderedYearNum = new Date(yearNum, monthIndex, 1).getFullYear();
+   return renderedYearNum;
+}
+
+function renderHeader(yearNum, monthIndex)
+{
+   let wrappedIndex = calcWrappedMonthIndex(yearNum, monthIndex);
+   let renderedYearNum = calcYearFullNum(yearNum, monthIndex);
+   monthName.textContent = months[wrappedIndex];
+   yearNumHeader.textContent = renderedYearNum;
+}
 
 function renderSpacingBeforeFirstDate(yearNum, monthIndex)
 {
@@ -126,9 +140,14 @@ function renderDates(yearNum, monthIndex)
       cell.append(dateNum)
       datesContainer.append(cell)
 
-      cell.onclick = function()
+      cell.addEventListener(`click`, cellSelection)
+
+      function cellSelection()
       {
          let currentSelected = datesContainer.querySelector(`.selectedCell`)
+         let wrappedMonthIndex = calcWrappedMonthIndex(presentYearNum, renderedMonthIndex);
+         let renderedMonth = months[wrappedMonthIndex]
+
          if(currentSelected!==null)
          {
             currentSelected.setAttribute(`class`,`dateCell`);
@@ -139,13 +158,17 @@ function renderDates(yearNum, monthIndex)
             cellSelected = false
             cell.setAttribute(`class`,`selectedCell`)
             cell.setAttribute(`class`, `${cellClass}`)
+            dateDetailsPopover.style.display = "none";
          }
          else if (cellSelected===false)
          {
             cellSelected = true
             cell.setAttribute(`class`, `${cellClass}`)
             cell.setAttribute(`class`,`selectedCell`)
+            dateDetailsPopover.style.display = "block";
+            detailsPanelDate.textContent = `${date} ${renderedMonth}`;
          }
+         
 
       }
 
@@ -170,6 +193,12 @@ function blockDubleClickSelection(event)
    {
       event.preventDefault()
    }
+}
+
+addEventBtn.addEventListener(`click`, createEvent)
+function createEvent() 
+{
+
 }
 
 /*

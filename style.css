@@ -1,66 +1,160 @@
 *
 {
    margin: 0px;
+   box-sizing: border-box;
    font-family: Arial;
+   color: rgb(251, 242, 171);
 }
 
-#mainContainer
+body
+{
+   background-color: rgb(114, 87, 53);
+}
+
+#mainWindowContainer
 {
    height: 100vh;
+   height: 100dvh; /* For Mobile issue w vh */
    width: 100vw;
+   
+}
+
+#dateDetailsPopover
+{
+   display: none;
+   background-color: rgb(124, 57, 12);
+   border: 3px solid rgb(172, 90, 60);
+   border-top: 0px;
+   height: 98%;
+   width: 25rem;
+   border-radius: 1rem;
+   z-index: 10;
+   top: 2vh;
+   left: 71%;
+   position: absolute;
+}
+
+#dateDetailsPopover *
+{
+   margin-left: 1rem;
+}
+
+#dateDetailsPopover h1
+{
+   margin-top: 2rem;
+   margin-bottom: 1rem;
+}
+
+.eventInputContainer /*WIP*/
+{
+   background-color: blue;
+   border-radius: 1rem;
+   margin-top: 1rem;
+   height: 10rem;
+   width: 92%;
+}
+
+#addEventBtn
+{
+   cursor: pointer;
+   background-color: transparent;
+   font-size: 1.0065rem;
+   border: none;
+}
+
+#addEventBtn:hover
+{
+   filter: brightness(0.85);
+}
+
+#addEventBtn:active
+{
+   filter: brightness(0.75);
+}
+
+#monthContainer
+{
    display: grid;
    justify-items: center;
    grid-template-rows: 0.25fr 1fr;
-}
-
-#monthHeaderContainer span
-{
-   font-size: 1.5rem;
-}
-
-#previousMonthBtn, #nextMonthBtn
-{
-   margin-left: 0.5rem;
-   margin-right: 0.5rem;
-   border: none;
-   background-color: transparent;
-   font-size: 1.25rem;
-   cursor: pointer;
+   position: relative;
+   max-height: 100%;
 }
 
 #monthHeaderContainer
 {
    margin: 1rem;
+   display: flex;
+   align-items: center;
+   background-color: rgb(124, 57, 12);
+   border: 3px solid rgb(172, 90, 60);
+   border-top: 0px;
+   border-radius: 0.75rem;
+
 }
 
-#daysNameContainer, #datesContainer
+#monthWrapper
+{
+   padding: 1rem 1.5rem 1rem 1rem;
+   background-color: rgb(124, 57, 12);
+   border-radius: 0.75rem;
+   border: 3px solid rgb(172, 90, 60);
+   border-top: 0px;
+}
+
+#mmYyContainer
+{
+   display: inline-block;
+   width: 12rem;
+   font-size: 1.5rem;
+   text-align: center;
+}
+
+#previousMonthBtn, #nextMonthBtn
+{
+   height: 1.5rem;
+   width: 1.5rem;
+   background-color: transparent;
+   border-radius: 50%;
+   border: none;
+   font-size: 1.25rem;
+   cursor: pointer;
+   transition: 0.15s ease-in-out;
+}
+
+#previousMonthBtn:hover, #nextMonthBtn:hover
+{
+   background-color: rgba(175, 207, 49, 0.51);
+}
+
+
+#datesContainer, #daysNameContainer
 {
    display: grid;
-   grid-template-columns: repeat(7, 1fr);
+   grid-template-columns: repeat(7, 2rem);
    column-gap: 2.5rem;
    row-gap: 0.5rem;
-   width: max-content;
    margin-left: auto;
    margin-right: auto;
+   text-align: center;
+
 }
 
 #daysNameContainer
 {
-   margin-left: 0.5rem;
+   margin-bottom: 1rem;
 }
-
 .spacingCell
 {
-   background-color: rgba(203, 79, 27, 0.885);
    height: 2.5rem;
    width: 2.5rem;
    border: none;
    border-radius: 0.75rem;
 }
 
-.dateCell
+.dateCell, .presentDateCell:hover
 {
-   background-color: rgba(173, 191, 100, 0.885);
+   background-color: rgba(147, 179, 16, 0.885);
    height: 2.5rem;
    width: 2.5rem;
    border: none;
@@ -88,7 +182,7 @@
 
 .selectedCell
 {
-   background-color: rgb(0, 85, 255);
+   background-color: rgb(217, 128, 56);
    height: 2.5rem;
    width: 2.5rem;
    border: none;
@@ -109,4 +203,10 @@
    border-radius: 0.75rem;
    cursor: pointer;
    transition: 0.1s ease-in;
+}
+
+.presentDateCell:hover
+{
+   box-shadow: none;
+   color: white;
 }

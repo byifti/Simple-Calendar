@@ -8,33 +8,53 @@
 </head>
 <body>
 
-<div id="mainContainer">
-
-   <div id="monthHeaderContainer">
-      <button id="previousMonthBtn">&lt;</button>
-      <span id="monthName"></span>
-      <span id="yearNumHeader"></span>
-      <button id="nextMonthBtn">&gt;</button>
-   </div>
+<div id="mainWindowContainer">
 
    <div id="monthContainer">
-      <div id="daysNameContainer">
-         <span>Sun</span>
-         <span>Mon</span>
-         <span>Tue</span>
-         <span>Wed</span>
-         <span>Thu</span>
-         <span>Fri</span>
-         <span>Sat</span>
+
+      <div id="monthHeaderContainer">
+
+         <button id="previousMonthBtn">&lt;</button>
+
+            <div id="mmYyContainer">
+               <span id="monthName"></span>
+               <span id="yearNumHeader"></span>
+            </div>
+
+         <button id="nextMonthBtn">&gt;</button>
+
       </div>
 
-      <div id="datesContainer">
+      <div id="monthWrapper">
+         <div id="daysNameContainer">
+            <span>Sun</span>
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+         </div>
 
+         <div id="datesContainer">
+            
+         </div>
+
+      </div>
+
+      <div id="dateDetailsPopover">
+         <h1 id="detailsPanelDate"></h1>
+         <button id="addEventBtn">+ Add event</button>
+         <div class="eventInputContainer"></div>
       </div>
 
    </div>
 
+
+
 </div>
+
+
 
 <script src="main.js"></script>   
 </body>
