@@ -7,6 +7,7 @@ const nextMonthBtn = document.getElementById("nextMonthBtn")
 const dateDetailsPopover = document.getElementById("dateDetailsPopover")
 const addEventBtn = document.getElementById("addEventBtn")
 const detailsPanelDate = document.getElementById("detailsPanelDate")
+const inputEvent = document.getElementById("inputEvent")
 // END
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -195,11 +196,32 @@ function blockDubleClickSelection(event)
    }
 }
 
-addEventBtn.addEventListener(`click`, createEvent)
-function createEvent() 
+
+
+/*
+
+addEventBtn.addEventListener(`click`, getEventData)
+function renderEvent(label) 
 {
+   let eventContainer = document.createElement(`div`);
+   eventContainer.setAttribute(`class`, `eventContainer`)
+
+   let eventLabel = document.createElement(`span`)
+   eventLabel.textContent = label;
+
+   eventContainer.append(eventLabel)
+   dateDetailsPopover.append(eventContainer)
 
 }
+
+function getEventData()
+{
+   let eventLabel = inputEvent.value;
+
+   renderEvent(eventLabel)
+}
+
+*/
 
 /*
 The whole calender needs to know what state its in currently. 

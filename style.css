@@ -25,7 +25,9 @@ body
    background-color: rgb(124, 57, 12);
    border: 3px solid rgb(172, 90, 60);
    border-top: 0px;
-   height: 98%;
+   height: max-content;
+   max-height: 44rem;
+   overflow-y: scroll;
    width: 25rem;
    border-radius: 1rem;
    z-index: 10;
@@ -45,13 +47,14 @@ body
    margin-bottom: 1rem;
 }
 
-.eventInputContainer /*WIP*/
+.eventContainer /*WIP*/
 {
    background-color: blue;
    border-radius: 1rem;
    margin-top: 1rem;
    height: 10rem;
    width: 92%;
+   margin-bottom: 1.5rem;
 }
 
 #addEventBtn
@@ -60,6 +63,7 @@ body
    background-color: transparent;
    font-size: 1.0065rem;
    border: none;
+   margin-left: 0px;
 }
 
 #addEventBtn:hover
@@ -70,6 +74,22 @@ body
 #addEventBtn:active
 {
    filter: brightness(0.75);
+}
+
+#inputEvent
+{
+   background-color: rgb(99, 46, 10);
+   border: 2px solid rgb(150, 77, 50);
+   border-radius: 4px;
+   border-top: none;
+   height: 2rem;
+   width: 65%;
+   margin-bottom: 1rem;
+}
+
+#inputEvent:focus
+{
+   outline: none;
 }
 
 #monthContainer
