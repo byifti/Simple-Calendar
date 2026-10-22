@@ -76,7 +76,7 @@ body
    filter: brightness(0.75);
 }
 
-#inputEvent
+#eventInput
 {
    background-color: rgb(99, 46, 10);
    border: 2px solid rgb(150, 77, 50);
@@ -87,7 +87,7 @@ body
    margin-bottom: 1rem;
 }
 
-#inputEvent:focus
+#eventInput:focus
 {
    outline: none;
 }
